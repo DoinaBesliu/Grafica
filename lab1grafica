@@ -1,0 +1,161 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApplication4
+{
+    public partial class Form1 : Form
+    {
+        Bitmap b ;
+        Graphics g ;
+        Pen p,m ;
+        Pen c;
+        SolidBrush s,k,l;
+        
+        
+
+        public Form1()
+        {
+            InitializeComponent();
+
+            this.Text = "Utilizarea metodelor grafice";
+           button1.Text = "Draw";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+             b = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+             // s = new SolidBrush(Color.Blue);
+             k = new SolidBrush(Color.Green);
+              l = new SolidBrush(Color.Red);
+             
+              
+
+            g = Graphics.FromImage(b);
+             p = new Pen(Color.Red);
+             m = new Pen(Color.Black);
+             c = new Pen(Brushes.Black,2);
+          
+            c.DashStyle = DashStyle.Dash;
+
+             g.FillRectangle(l, 20, 20, 140, 50); //dreptunghi
+             g.DrawLine(m, 20, 90, 160, 90);//linie
+           
+            //Paralelepiped
+            g.DrawRectangle(m, 10, 200, 60, 60);
+            g.DrawLine(m,10, 200, 100, 100);
+            g.DrawLine(m, 70, 200, 150, 100);
+            g.DrawLine(m, 100, 100, 150, 100);
+            g.DrawLine(m, 150, 150, 150, 100);
+            g.DrawLine(m, 70, 260, 150, 150);
+            g.DrawLine(c, 100, 150, 150, 150);
+            g.DrawLine(c, 100, 150, 100, 100);
+            g.DrawLine(c, 10, 260, 100, 150);
+
+          
+
+            g.DrawEllipse(m, 370, 10, 120, 70);//elipsa
+             g.FillPie(l, 370, 70, 80, 130, 50, 200);//sector de elipsa
+
+            
+             
+             g.FillEllipse(l,215, 190, 80, 80);   //cerc
+             g.FillPie(l, 150,30, 150, 150, 40, 50); //sector de cerc
+           
+             
+
+     
+       
+             //triunghi
+             Point point1 = new Point(370, 280);
+             Point point2 = new Point(420, 210);
+             Point point3 = new Point(470, 280);
+            
+             Point[] curvePoints =
+            {
+                point1,
+                point2,
+                point3,
+            };
+
+            //poligon
+             g.FillPolygon(l, curvePoints);
+
+
+             Point p1 = new Point(260,10);
+             Point p2 = new Point(220,30);
+             Point p3 = new Point(250,90);
+             Point p4 = new Point(300,100);
+             Point p5 = new Point(320,70);
+             Point p6 = new Point(310,20);
+             Point[] cPoints =
+             {
+                 p1,
+                 p2,
+                 p3,
+                 p4,
+                 p5,
+                 p6,
+              
+             };
+
+             g.DrawPolygon(m, cPoints);
+             
+
+             pictureBox1.Image = b;
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JPG|*.jpg";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+
+                pictureBox1.ImageLocation = openFileDialog.FileName;
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bitmap bmp = new Bitmap(pictureBox1.Image);
+            bmp.Save("Picture.jpg");
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result;
+            string message = "Doriti sa esiti?";
+            MessageBoxButtons button = MessageBoxButtons.YesNo;
+            result = MessageBox.Show(message, "ERROR!", button);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+        }
+    }
+}
